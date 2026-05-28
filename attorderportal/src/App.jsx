@@ -14,7 +14,6 @@ const steps = [
     billingBox: true,
     checklist: [
       `Check email from "SARA PLUS" for your real order summary with promotions`,
-      "Ignore any AT&T direct email showing 'Estimated Bill' — that's corporate pricing without promos",
       "Track your order at att.com/checkmyorder (use order # from confirmation email + ZIP)",
       "Note expected delivery: 1–3 business days",
       "Save your Account Manager's contact info",
