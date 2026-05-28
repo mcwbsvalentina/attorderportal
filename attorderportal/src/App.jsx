@@ -199,12 +199,145 @@ const steps = [
   },
 ];
 
+const SYSTEM_PROMPT = `You are a friendly, knowledgeable AT&T Order Support Assistant for customers who signed up through the exclusive AT&T Target Promotion. Your goal is to resolve customer questions fully so they don't need to call AT&T corporate or escalate unnecessarily. Be warm, confident, and thorough.
 
+=== KEY CONTACTS ===
+- VIP Guest Service Line: (833) 470-0693
+- Customer's Account Manager is always the first point of contact
+- For activation help: att.com/getstarted
+- For order tracking: att.com/checkmyorder
+- For switcher payoff: att.com/switcherpayoff
+- For appreciation offers: att.com/appreciation (within 30 days of activation)
+
+=== ORDERING SYSTEM ===
+- Orders come through "SARA PLUS" — AT&T's promotional ordering system for Target
+- Any AT&T direct email showing an "Estimated Bill" uses CORPORATE pricing WITHOUT promotions or trade-in credits — customers should IGNORE that email for pricing purposes
+- Their REAL order summary is in the SARA PLUS email with actual promo pricing
+- Phones arrive in 1–3 business days
+- Track order at att.com/checkmyorder using order # from confirmation email + ZIP code
+
+=== TAX / DOUBLE CHARGE QUESTION (very common — reassure immediately) ===
+When customers ask about seeing two charges or extra tax charges:
+- This is 100% normal and expected
+- When they ordered, a sales tax HOLD was placed on their card
+- As each device ships, the card may be charged sales tax for that device
+- This causes temporary duplicate-looking charges
+- The hold is REMOVED after all devices ship — they only pay the total sales tax once, no more
+- Tell them: "This is completely normal — you'll only be charged once for the total taxes owed. The extra charge will be removed automatically once all your phones have shipped."
+
+=== BILLING — WHAT TO EXPECT ===
+First bill will be HIGHER than expected — this is normal:
+- First Bill includes: partial month service, first month billed in advance, equipment/one-time fees
+- Second Bill: may still be higher, discounts take up to 3 billing cycles
+- By Third Bill: full plan charges, AutoPay & Paperless discounts applied, trade-in discounts applied, all promotions applied. Discounts are applied retroactively from the first bill.
+- IMPORTANT: The "Estimated Bill" email from AT&T is corporate pricing without promos — NOT their real bill
+
+=== TRADE-IN PROCESS ===
+- Trade-in process is started automatically — shipping materials are mailed to the customer
+- Must use PROVIDED shipping materials — NOT the new phone's box
+- One trade-in device per box (separate box for each device)
+- MUST trade in within 30 days of activation to get promotional credits
+- Before shipping: turn off Activation Lock (Find My iPhone), factory reset, remove SIM (older devices only)
+- Once shipped: device CANNOT be returned, data CANNOT be recovered
+- Take a photo of the shipping label AND tracking number before dropping off
+- Device must pass condition check: powers on, screen intact (no chips/dead pixels/burn-in), no cracks
+
+=== ACTIVATION ===
+- Activate at att.com/getstarted OR call/text their Account Manager
+- Phone number transfer takes up to 1 hour after activation
+- Old phone continues working until transfer finishes
+- For help: VIP Guest Service Line (833) 470-0693
+
+=== MYAT&T ACCOUNT SETUP ===
+- Download MyAT&T app (App Store or Google Play)
+- Create account: Get Started → Create One Now → enter phone number + ZIP + passcode (birth year or 4-digit POS passcode)
+- Alternate: Sign in with a provider → AT&T
+- AutoPay + Paperless Billing with ACH = $10/mo per line discount ($120/year per line!)
+- With debit card: $5/mo discount
+- Must validate via email link within 7 days to be eligible
+- Discount appears within 1–2 billing cycles
+
+=== GUEST BENEFITS ===
+1. CARRIER SWITCHER OFFER — Up to $800/line
+   - Go to att.com/switcherpayoff
+   - Submit itemized previous carrier bill showing installment balance or ETF
+   - Bill must be dated within 1 calendar month of AT&T activation
+   - Submit within 60 days of activation
+   - AT&T sends Visa Reward Card in 8–10 weeks, allow 7–10 days before checking status
+   - MUST remain with AT&T for 36 months or reimbursement is charged back
+
+2. TARGET PRIVATE OFFERS
+   - Switch/port to AT&T: $150/line ($4.17/mo bill credit × 36 months)
+   - Add-A-Line: $100/line ($2.78/mo bill credit × 36 months)
+   - Upgrade: $50/line ($5.00/mo bill credit × 10 months)
+   - Requires qualifying unlimited plan + installment plan
+
+3. AT&T APPRECIATION OFFERS — 25% off unlimited plan
+   - For first responders, military, nurses, teachers, other qualifying occupations
+   - Must go to att.com/appreciation within 30 days of activation
+   - Account HOLDER must qualify (not just any line on the account)
+
+4. AUTOPAY & PAPERLESS BILLING — $120/year per line
+   - $10/mo with ACH bank account, $5/mo with debit card
+   - Must validate via email link within 7 days
+   - Appears within 1–2 billing cycles
+
+=== NEXT UP ANYTIME ===
+- $10/mo per line
+- Allows upgrade after one payment
+- Get AT&T's best offers once 33% is paid off
+
+=== HANDLING FRUSTRATED CUSTOMERS ===
+- Acknowledge briefly, then pivot to solution
+- For bill shock: explain the 3-bill timeline, reassure discounts are retroactive
+- For missing credits: confirm trade-in was shipped within 30 days, credits appear by bill 3
+- For tax confusion: explain the hold system (see above)
+- For activation issues: direct to att.com/getstarted or (833) 470-0693
+- Always suggest Account Manager before corporate escalation
+
+Tone: Warm, upbeat, reassuring, conversational — like a knowledgeable friend. Short paragraphs. Bullet points for steps. Under 200 words unless complexity requires more. Never invent specific account details or credit amounts. For account-specific issues, direct to (833) 470-0693 or their Account Manager.`;
+
+function ChatMessage({ msg }) {
+  return (
+    <div style={{ display: "flex", justifyContent: msg.role === "user" ? "flex-end" : "flex-start", marginBottom: "12px" }}>
+      {msg.role === "assistant" && (
+        <div style={{
+          width: 32, height: 32, borderRadius: "50%",
+          background: "linear-gradient(135deg, #00a8e0, #005eb8)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: 8.5, color: "#fff", fontWeight: 800,
+          marginRight: 8, flexShrink: 0, marginTop: 2,
+          boxShadow: "0 2px 8px rgba(0,168,224,0.4)", letterSpacing: "-0.3px",
+        }}>AT&T</div>
+      )}
+      <div style={{
+        maxWidth: "80%",
+        background: msg.role === "user" ? "linear-gradient(135deg, #00a8e0, #0076c0)" : "rgba(255,255,255,0.07)",
+        color: msg.role === "user" ? "#fff" : "#e8f4fd",
+        padding: "10px 14px",
+        borderRadius: msg.role === "user" ? "16px 16px 4px 16px" : "16px 16px 16px 4px",
+        fontSize: 13.5, lineHeight: 1.6,
+        border: msg.role === "assistant" ? "1px solid rgba(0,168,224,0.2)" : "none",
+        whiteSpace: "pre-wrap",
+      }}>{msg.content}</div>
+    </div>
+  );
+}
 
 export default function App() {
   const [activeStep, setActiveStep] = useState(0);
   const [checked, setChecked] = useState(() => steps.map(s => new Array(s.checklist.length).fill(false)));
+  const [chatOpen, setChatOpen] = useState(false);
+  const [messages, setMessages] = useState([
+    { role: "assistant", content: "Hi! 👋 I'm your AT&T Order Assistant.\n\nI can help with your Target promotion, the SARA PLUS email, tax questions, activation, trade-ins, billing, and all your guest benefits.\n\nWhat do you need help with?" }
+  ]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const chatEndRef = useRef(null);
 
+  useEffect(() => {
+    if (chatOpen) chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, chatOpen]);
 
   const completedCount = (i) => checked[i].filter(Boolean).length;
   const totalProgress = () => {
@@ -214,6 +347,32 @@ export default function App() {
   };
   const toggleCheck = (si, ii) => {
     setChecked(prev => { const n = prev.map(a => [...a]); n[si][ii] = !n[si][ii]; return n; });
+  };
+  const sendMessage = async () => {
+    const text = input.trim();
+    if (!text || loading) return;
+    const newMessages = [...messages, { role: "user", content: text }];
+    setMessages(newMessages);
+    setInput("");
+    setLoading(true);
+    try {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 1000,
+          system: SYSTEM_PROMPT,
+          messages: newMessages.map(m => ({ role: m.role, content: m.content })),
+        }),
+      });
+      const data = await res.json();
+      const reply = data.content?.map(b => b.text || "").join("") || "Sorry, couldn't get a response. Please try again.";
+      setMessages(prev => [...prev, { role: "assistant", content: reply }]);
+    } catch {
+      setMessages(prev => [...prev, { role: "assistant", content: "Connection issue — please try again in a moment." }]);
+    }
+    setLoading(false);
   };
 
   const prog = totalProgress();
@@ -438,6 +597,43 @@ export default function App() {
           </div>
         </div>
       </div>
+
+      {/* Chat bubble */}
+      <button onClick={() => setChatOpen(o => !o)} style={{ position: "fixed", bottom: 22, right: 22, width: 52, height: 52, borderRadius: "50%", background: "linear-gradient(135deg,#00a8e0,#005eb8)", border: "none", cursor: "pointer", boxShadow: "0 6px 24px rgba(0,168,224,0.55)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 21, zIndex: 100, transition: "transform 0.2s ease" }}
+        onMouseEnter={e => e.currentTarget.style.transform = "scale(1.1)"}
+        onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}>
+        {chatOpen ? "✕" : "💬"}
+      </button>
+
+      {/* Chat panel */}
+      {chatOpen && (
+        <div style={{ position: "fixed", bottom: 86, right: 22, width: 358, height: 515, background: "linear-gradient(160deg,#0a1628,#07101f)", border: "1px solid rgba(0,168,224,0.22)", borderRadius: 18, overflow: "hidden", display: "flex", flexDirection: "column", boxShadow: "0 24px 60px rgba(0,0,0,0.7)", zIndex: 99, animation: "slideUp 0.22s cubic-bezier(0.4,0,0.2,1)" }}>
+          <style>{`@keyframes slideUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}} @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}} *{box-sizing:border-box} ::-webkit-scrollbar{width:4px} ::-webkit-scrollbar-thumb{background:rgba(0,168,224,0.25);border-radius:2px}`}</style>
+          <div style={{ padding: "12px 14px", borderBottom: "1px solid rgba(0,168,224,0.12)", display: "flex", alignItems: "center", gap: 10, background: "rgba(0,168,224,0.05)" }}>
+            <div style={{ width: 34, height: 34, borderRadius: "50%", background: "linear-gradient(135deg,#00a8e0,#005eb8)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 8.5, fontWeight: 800, color: "#fff", letterSpacing: "-0.3px", boxShadow: "0 2px 8px rgba(0,168,224,0.4)" }}>AT&T</div>
+            <div>
+              <div style={{ fontSize: 13.5, fontWeight: 800, color: "#e8f4fd" }}>Order Assistant</div>
+              <div style={{ fontSize: 10.5, color: "#00a8e0", display: "flex", alignItems: "center", gap: 4 }}>
+                <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#00d4a0", display: "inline-block" }} /> Always here to help
+              </div>
+            </div>
+          </div>
+          <div style={{ flex: 1, overflowY: "auto", padding: "14px 12px" }}>
+            {messages.map((m, i) => <ChatMessage key={i} msg={m} />)}
+            {loading && (
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <div style={{ width: 28, height: 28, borderRadius: "50%", background: "linear-gradient(135deg,#00a8e0,#005eb8)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 8, color: "#fff", fontWeight: 800 }}>AT&T</div>
+                <div style={{ display: "flex", gap: 4 }}>{[0,1,2].map(i => <span key={i} style={{ width: 6, height: 6, borderRadius: "50%", background: "#00a8e0", display: "inline-block", animation: `bounce 1s ease ${i*0.15}s infinite` }} />)}</div>
+              </div>
+            )}
+            <div ref={chatEndRef} />
+          </div>
+          <div style={{ padding: "10px 12px", borderTop: "1px solid rgba(0,168,224,0.1)", display: "flex", gap: 7 }}>
+            <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === "Enter" && !e.shiftKey && sendMessage()} placeholder="Ask anything about your order..." style={{ flex: 1, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(0,168,224,0.18)", borderRadius: 10, padding: "9px 12px", color: "#e0edf8", fontSize: 13.5, outline: "none" }} />
+            <button onClick={sendMessage} disabled={loading || !input.trim()} style={{ width: 36, height: 36, borderRadius: 9, border: "none", background: loading || !input.trim() ? "rgba(0,168,224,0.15)" : "linear-gradient(135deg,#00a8e0,#005eb8)", color: "#fff", fontSize: 16, cursor: loading || !input.trim() ? "default" : "pointer", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>↑</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
