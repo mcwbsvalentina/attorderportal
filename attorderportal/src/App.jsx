@@ -85,7 +85,7 @@ const steps = [
       "Device factory reset",
       "SIM card removed (older devices only)",
       "Took a photo of shipping label AND tracking number",
-      "Trade-in shipped within 30 days of activation",
+      "Place each old device in the appropriate box and ensure it’s labeled with the correct phone number.",
     ],
     alert: `🚨 IMPORTANT: You MUST trade in devices within 30 days of activation to receive promotional credits. Once your trade-in is shipped, the device CANNOT be returned and any remaining data CANNOT be recovered.`,
     tip: "Take a picture of the shipping label AND the tracking number before dropping it off — keep these for your records!",
