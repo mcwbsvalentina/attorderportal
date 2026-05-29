@@ -51,6 +51,83 @@ const steps = [
     subtitle: "Get your new line live and connected",
     description: `Now it's time to activate your new phone! You have two easy options:\n\n📞 Call or text your rep for guided activation\n\n🌐 Self-activate at att.com/getstarted — enter the phone number you want to activate + your ZIP code`,
     activationNote: `Once your new phone is active, your phone number will transfer to the new device. This process may take up to 1 hour. Your old phone will continue working until the transfer is finished.`,
+    expandableSections: [
+      {
+        id: "byod",
+        icon: "📱",
+        title: "BYOD — Brought Your Own Device?",
+        subtitle: "Setting up service on a phone you already own",
+        color: "#00a8e0",
+        content: {
+          link: { label: "AT&T BYOD Info & Compatibility Check", url: "https://www.att.com/wireless/byod/" },
+          steps: [
+            {
+              heading: "Insert Your SIM or Set Up eSIM",
+              items: [
+                "Physical SIM: Insert the AT&T SIM card provided into your device",
+                "eSIM: Go to Settings → Cellular → Add eSIM, then scan the QR code provided by your rep",
+              ],
+            },
+            {
+              heading: "After SIM Setup",
+              items: [
+                "Restart your phone",
+                "Wait a few minutes for activation to complete",
+                "You should see AT&T signal appear",
+              ],
+            },
+            {
+              heading: "Still Showing SOS or No Service?",
+              isAlert: true,
+              items: [
+                "Make sure your phone is unlocked (not locked to your previous carrier)",
+                "Go to Settings → Cellular and make sure cellular is toggled ON",
+                "Try Settings → General → Transfer or Reset iPhone → Reset → Reset Network Settings",
+                "Still not working? Call support at (833) 470-0693",
+              ],
+            },
+          ],
+        },
+      },
+      {
+        id: "allstate",
+        icon: "🛡️",
+        title: "Allstate Protection Plan",
+        subtitle: "Activate your phone protection coverage",
+        color: "#00d4a0",
+        content: {
+          link: { label: "Activate at allstate.com/claims/phone-protection", url: "https://www.allstate.com/claims/phone-protection" },
+          steps: [
+            {
+              heading: "How to Activate Your Plan",
+              items: [
+                "Visit allstate.com/claims/phone-protection",
+                "Click 'Activate' or 'Get Started' and enter your phone number",
+                "Have your device IMEI ready (Settings → General → About → IMEI)",
+                "Complete enrollment — you'll receive a confirmation email",
+              ],
+            },
+            {
+              heading: "What's Covered",
+              items: [
+                "Accidental damage (cracked screens, liquid damage)",
+                "Loss and theft coverage",
+                "Mechanical/electrical breakdown",
+                "File claims online or by phone 24/7",
+              ],
+            },
+            {
+              heading: "Important",
+              isAlert: true,
+              items: [
+                "Activate your plan as soon as possible after getting your device",
+                "Keep your confirmation email — you'll need it if you file a claim",
+              ],
+            },
+          ],
+        },
+      },
+    ],
     checklist: [
       "New phone is powered on and SIM inserted (or eSIM set up)",
       "Activated via att.com/getstarted OR called/texted your rep",
@@ -85,7 +162,7 @@ const steps = [
       "Device factory reset",
       "SIM card removed (older devices only)",
       "Took a photo of shipping label AND tracking number",
-      "Place each old device in the appropriate box and ensure it’s labeled with the correct phone number.",
+      "Place each old device in the appropriate box and ensure it's labeled with the correct phone number.",
     ],
     alert: `🚨 IMPORTANT: You MUST trade in devices within 30 days of activation to receive promotional credits. Once your trade-in is shipped, the device CANNOT be returned and any remaining data CANNOT be recovered.`,
     tip: "Take a picture of the shipping label AND the tracking number before dropping it off — keep these for your records!",
@@ -130,8 +207,8 @@ const steps = [
       {
         title: "Carrier Switcher Offer — Up to $800 per line",
         color: "#00d4a0",
-        body: `Get up to $800 per line on an AT&T Visa Reward Card when porting in to a postpaid wireless account and activating a new smartphone line.\n\n• Go to att.com/switcherpayoff and submit an itemized bill from your previous carrier showing a smartphone installment balance or ETF.\n\n⚠️ You MUST remain with AT&T for 36 months after receiving the reimbursement or it will be charged back.`,
-        link: { label: "Go to att.com/switcherpayoff", url: "https://att.com/switcherpayoff" },
+        body: `Get up to $800 reimbursed for any remaining smartphone installment balance or ETF charged by your previous carrier.\n\nRequirements:\n• Port-in from a qualifying competing postpaid carrier (AT&T Owned & VOIP numbers excluded)\n• Must have remaining installment balance or ETF (3rd party financing via Apple, Samsung, or Retailer not eligible)\n• Previous account must be active at least 120 days with at least 4 installment payments made\n• Keep AT&T service on ported number for 36 months (pro-rated charge-back if cancelled early)\n• Port-in must be completed at time of order — upgrades, new numbers & temp numbers not eligible\n\nRedemption Steps:\n1. Visit att.com/switcherpayoff within 60 days of activation\n2. Enter ported number, AT&T account number and account info\n3. Upload previous carrier bill showing all pages with installment payoff/ETF amounts (bill must be dated within 1 calendar month of activation)\n4. AT&T verifies and sends reward card within 8–10 weeks — check status at rewardcenter.att.com`,
+        link: { label: "Go to att.com/switcherpayoff", url: "https://www.att.com/switcherpayoff/" },
       },
       {
         title: "Target Private Offers — Up to $150 per line",
@@ -197,6 +274,47 @@ const steps = [
     contact: "(833) 470-0693",
   },
 ];
+
+function ExpandableSection({ section }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{ marginBottom: 12, borderRadius: 11, border: `1px solid ${section.color}30`, overflow: "hidden" }}>
+      <div
+        onClick={() => setOpen(o => !o)}
+        style={{ display: "flex", alignItems: "center", gap: 10, padding: "13px 16px", cursor: "pointer", background: open ? `${section.color}12` : "rgba(255,255,255,0.025)", transition: "background 0.2s" }}
+      >
+        <span style={{ fontSize: 18 }}>{section.icon}</span>
+        <div style={{ flex: 1 }}>
+          <div style={{ fontSize: 13, fontWeight: 800, color: section.color }}>{section.title}</div>
+          <div style={{ fontSize: 11, color: "#4a7a9a", marginTop: 1 }}>{section.subtitle}</div>
+        </div>
+        <span style={{ color: section.color, fontSize: 13, fontWeight: 700, transition: "transform 0.2s", display: "inline-block", transform: open ? "rotate(180deg)" : "rotate(0deg)" }}>▾</span>
+      </div>
+      {open && (
+        <div style={{ padding: "14px 16px", borderTop: `1px solid ${section.color}20`, background: "rgba(0,0,0,0.15)" }}>
+          {section.content.link && (
+            <a href={section.content.link.url} target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 6, background: `${section.color}22`, border: `1px solid ${section.color}50`, color: section.color, padding: "7px 13px", borderRadius: 7, textDecoration: "none", fontSize: 12, fontWeight: 700, marginBottom: 14 }}>
+              🔗 {section.content.link.label}
+            </a>
+          )}
+          {section.content.steps.map((s, i) => (
+            <div key={i} style={{ marginBottom: 14 }}>
+              <div style={{ fontSize: 11, fontWeight: 800, color: s.isAlert ? "#ff8c00" : section.color, letterSpacing: "0.07em", textTransform: "uppercase", marginBottom: 8 }}>
+                {s.isAlert ? "⚠️ " : ""}{s.heading}
+              </div>
+              {s.items.map((item, j) => (
+                <div key={j} style={{ display: "flex", gap: 8, marginBottom: 6, fontSize: 13, color: s.isAlert ? "#ffd080" : "#9dcce8", alignItems: "flex-start", lineHeight: 1.55 }}>
+                  <span style={{ color: s.isAlert ? "#ff8c00" : section.color, flexShrink: 0, marginTop: 2 }}>◦</span>
+                  {item}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function App() {
   const [activeStep, setActiveStep] = useState(0);
@@ -334,6 +452,15 @@ export default function App() {
 
           {step.autopayNote && <div style={{ background: "rgba(0,212,160,0.07)", border: "1px solid rgba(0,212,160,0.25)", borderLeft: "3px solid #00d4a0", borderRadius: "0 10px 10px 0", padding: "12px 15px", marginBottom: 18, fontSize: 13, color: "#80efd0", lineHeight: 1.65 }}>{step.autopayNote}</div>}
           {step.activationNote && <div style={{ background: "rgba(0,168,224,0.07)", border: "1px solid rgba(0,168,224,0.2)", borderRadius: 10, padding: "12px 15px", marginBottom: 18, fontSize: 13, color: "#8ecde8", lineHeight: 1.65 }}>ℹ️ {step.activationNote}</div>}
+
+          {step.expandableSections && (
+            <div style={{ marginBottom: 18 }}>
+              <div style={{ fontSize: 10, fontWeight: 700, color: "#3d6a8a", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 10 }}>Optional — Applies to Some Customers</div>
+              {step.expandableSections.map(section => (
+                <ExpandableSection key={section.id} section={section} />
+              ))}
+            </div>
+          )}
 
           {step.benefits && (
             <div style={{ marginBottom: 18 }}>
