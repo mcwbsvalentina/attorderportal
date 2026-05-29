@@ -111,7 +111,6 @@ const steps = [
               heading: "What's Covered",
               items: [
                 "Accidental damage (cracked screens, liquid damage)",
-                "Loss and theft coverage",
                 "Mechanical/electrical breakdown",
                 "File claims online or by phone 24/7",
               ],
